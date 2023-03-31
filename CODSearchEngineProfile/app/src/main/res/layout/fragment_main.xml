@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue"
+    tools:context=".MainFragment">
+
+    <TextView
+        android:id="@+id/tv_fragment_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_main_find_your_cod_profile"
+        android:textAlignment="center"
+        android:textColor="@color/yellow"
+        android:textSize="@dimen/text_size_large"
+        android:fontFamily="@font/black_ops_one_regular"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view_rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="500dp"
+        android:background="@drawable/rounded_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_fragment_main" />
+
+    <EditText
+        android:id="@+id/et_fragment_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/fragment_main_type_your_cod_name"
+        android:textColorHint="@color/transparent_gray"
+        android:textSize="22sp"
+        android:background="@color/white"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintEnd_toEndOf="@id/view_rectangle"
+        app:layout_constraintStart_toStartOf="@id/spinner"
+        app:layout_constraintTop_toBottomOf="@id/tv_fragment_main"
+        android:inputType="textMultiLine" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="10dp"
+        android:textAlignment="center"
+        android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+        app:layout_constraintStart_toStartOf="@id/view_rectangle"
+        app:layout_constraintEnd_toStartOf="@id/et_fragment_main"
+        app:layout_constraintTop_toBottomOf="@id/tv_fragment_main" />
+
+    <ImageView
+        android:id="@+id/iv_fragment_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_playstation"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="6dp"
+        app:layout_constraintStart_toStartOf="@id/view_rectangle"
+        app:layout_constraintEnd_toStartOf="@id/spinner"
+        app:layout_constraintTop_toBottomOf="@id/tv_fragment_main"/>
+
+    <TextView
+        android:id="@+id/tv_error_no_internet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/fragment_main_error_no_internet"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_rectangle"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_profiles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_rectangle"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_profile" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
