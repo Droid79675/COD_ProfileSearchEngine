@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "COD Search Engine Profile"
 include ':app'
+include ':domain'
+include ':data'
