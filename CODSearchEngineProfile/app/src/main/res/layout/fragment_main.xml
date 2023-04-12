@@ -5,7 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_blue"
-    tools:context=".MainFragment">
+    tools:context="com.codsearchengineprofile.presentation.ui.MainFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:theme="@style/Theme.CODSearchEngineProfile.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.CODSearchEngineProfile.PopupOverlay">
+
+            <TextView
+                android:id="@+id/toolbar_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="@string/activity_main_label"
+                android:textSize="@dimen/text_size_small"/>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <TextView
         android:id="@+id/tv_fragment_main"
@@ -19,61 +47,72 @@
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
-    <View
-        android:id="@+id/view_rectangle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="160dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="500dp"
-        android:background="@drawable/rounded_edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_fragment_main" />
+<!--    <View-->
+<!--        android:id="@+id/view_rectangle"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginTop="220dp"-->
+<!--        android:layout_marginEnd="30dp"-->
+<!--        android:layout_marginStart="50dp"-->
+<!--        android:layout_marginBottom="440dp"-->
+<!--        android:background="@drawable/rounded_edit_text"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tv_fragment_main" />-->
 
-    <EditText
-        android:id="@+id/et_fragment_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_fragment_main"
+        android:layout_width="340dp"
+        android:layout_height="60dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:hint="@string/fragment_main_type_your_cod_name"
         android:textColorHint="@color/transparent_gray"
         android:textSize="22sp"
-        android:background="@color/white"
-        android:layout_marginTop="60dp"
-        android:layout_marginStart="40dp"
-        app:layout_constraintEnd_toEndOf="@id/view_rectangle"
-        app:layout_constraintStart_toStartOf="@id/spinner"
-        app:layout_constraintTop_toBottomOf="@id/tv_fragment_main"
-        android:inputType="textMultiLine" />
+        android:background="@drawable/rounded_text_input_layout"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="30dp"
+        app:boxCornerRadiusBottomEnd="30dp"
+        app:boxCornerRadiusTopEnd="30dp"
+        app:boxBackgroundColor="@color/dark_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_fragment_main"
+        android:inputType="textMultiLine" >
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="10dp"
-        android:textAlignment="center"
-        android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
-        app:layout_constraintStart_toStartOf="@id/view_rectangle"
-        app:layout_constraintEnd_toStartOf="@id/et_fragment_main"
-        app:layout_constraintTop_toBottomOf="@id/tv_fragment_main" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/filled_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="100dp"
+            android:background="@drawable/rounded_edit_text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/iv_fragment_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="58dp"
+        android:layout_marginEnd="290dp"
         android:background="@drawable/icon_playstation"
-        android:layout_marginTop="48dp"
-        android:layout_marginStart="6dp"
-        app:layout_constraintStart_toStartOf="@id/view_rectangle"
-        app:layout_constraintEnd_toStartOf="@id/spinner"
+        app:layout_constraintTop_toBottomOf="@id/tv_fragment_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="200dp"
+        android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_fragment_main"/>
 
     <TextView
@@ -87,7 +126,19 @@
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_rectangle"/>
+        app:layout_constraintTop_toBottomOf="@+id/til_fragment_main"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_profiles"
@@ -101,8 +152,8 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_rectangle"
-        tools:itemCount="3"
+        app:layout_constraintTop_toBottomOf="@+id/til_fragment_main"
+        tools:itemCount="4"
         tools:listitem="@layout/item_profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
