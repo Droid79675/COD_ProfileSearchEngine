@@ -15,6 +15,7 @@ class ApiKeyInterceptor : Interceptor {
         builder.addHeader("X-RapidAPI-Host", "call-of-duty-modern-warfare.p.rapidapi.com")
         var newURL = original.url.newBuilder()
             .build()
+            
         if (btl) {
             val btlCode: String = ""
             val btlNickName: String = "" + "%23" + btlCode
@@ -22,6 +23,7 @@ class ApiKeyInterceptor : Interceptor {
                 .addQueryParameter("", btlNickName)
                 .build()
         }
+        
         if (psn) {
             val psnNickName: String = ""
             newURL = original.url.newBuilder()
@@ -29,6 +31,7 @@ class ApiKeyInterceptor : Interceptor {
                 .addQueryParameter("", "psn")
                 .build()
         }
+        
         if (xbl) {
             val xblNickName: String = ""
             newURL = original.url.newBuilder()

@@ -16,8 +16,8 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
-
     private val url: String = "https://call-of-duty-modern-warfare.p.rapidapi.com/"
+
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
         val okHttpBuilder = OkHttpClient.Builder()
@@ -35,14 +35,14 @@ class NetworkModule {
     }
 
     @Provides
+    @Named("auth_retrofit")
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(url)
-            .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
             .build()
     }
-
+    
     val profileApi = provideRetrofit(provideOkHttpClient()).create(ProfileService::class.java)
 }
