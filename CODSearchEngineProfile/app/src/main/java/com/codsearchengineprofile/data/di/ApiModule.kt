@@ -1,6 +1,6 @@
 package com.codsearchengineprofile.data.di
 
-import com.codsearchengineprofile.data.apiservice.ApiService
+import com.codsearchengineprofile.data.apiservice.ProfileService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -9,8 +9,8 @@ import retrofit2.Retrofit
 class ApiModule {
 
     @Provides
-    fun bindApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun bindApiService(retrofit: Retrofit): ProfileService {
+        return retrofit.create(ProfileService::class.java)
     }
 
 }

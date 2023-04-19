@@ -1,5 +1,6 @@
 package com.codsearchengineprofile.data.di
 
+import com.codsearchengineprofile.data.apiservice.ProfileService
 import com.codsearchengineprofile.data.di.interceptor.ApiKeyInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -15,6 +16,8 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
+    private val url: String = "https://call-of-duty-modern-warfare.p.rapidapi.com/"
+
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
         val okHttpBuilder = OkHttpClient.Builder()
@@ -35,10 +38,11 @@ class NetworkModule {
     @Named("auth_retrofit")
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://call-of-duty-modern-warfare.p.rapidapi.com/")
-            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(url)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
             .build()
     }
+    
+    val profileApi = provideRetrofit(provideOkHttpClient()).create(ProfileService::class.java)
 }
