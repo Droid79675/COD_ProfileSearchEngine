@@ -1,25 +1,25 @@
 package com.codsearchengineprofile.presentation.ui
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.codsearchengineprofile.databinding.FragmentMainBinding
-import com.codsearchengineprofile.domain.models.ProfileDomainModel
-import com.codsearchengineprofile.domain.usecases.GetProfileModelUseCase
-import io.reactivex.Single
-import kotlinx.android.synthetic.main.fragment_main.view.*
+import com.codsearchengineprofile.domain.model.ProfileDomainModel
+import com.codsearchengineprofile.presentation.ui.contract.Event
+import com.codsearchengineprofile.presentation.ui.contract.SearchViewState
 
 class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
 
     private val mainViewModel: MainViewModel by viewModels()
-    private val api: GetProfileModelUseCase = GetProfileModelUseCase()
 
+    lateinit var intervalWat: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,15 +27,17 @@ class MainFragment : Fragment() {
         binding = FragmentMainBinding.inflate(layoutInflater)
 
         initObservers()
-        binding.tilFragmentMain.setOnClickListener {
-            mainViewModel.setEvent(MainContract.Event.OnTextInputEditTextClicked)
+        binding.searchField.setOnClickListener {
+            mainViewModel.setEvent(
+                Event.OnTextInputEditTextClicked(
+                    binding.inputTextSearchField.text.toString(),
+                    binding.spinner.onItemSelectedListener.toString()
+                )
+            )
         }
         binding.spinner.setOnClickListener {
-            mainViewModel.setEvent(MainContract.Event.OnSpinnerClicked)
+            mainViewModel.setEvent(Event.OnSpinnerClicked)
         }
-//        binding.secondActivity.setOnClickListener {
-//            startActivity(Intent(this, SecondActivity::class.java))
-//        }
 
     }
 
@@ -43,30 +45,86 @@ class MainFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             mainViewModel.uiState.collect {
                 when (it.searchViewState) {
-                    is MainContract.SearchViewState.Idle -> { binding.progressBar.isVisible = false }
-                    is MainContract.SearchViewState.Loading -> { binding.progressBar.isVisible = true }
-                    is MainContract.SearchViewState.Success -> {
+                    is SearchViewState.Idle -> {
+                        binding.progressBar.isVisible = false
 
-                        val adapter: ProfilesAdapter = ProfilesAdapter {
+                        val intervals =
+                            arrayOf("PSN", "XBN", "BTL")
+                        val spinner = binding.spinner
+                        val adapter: ArrayAdapter<String?> =
+                            ArrayAdapter<String?>(
+                                requireContext(),
+                                android.R.layout.simple_spinner_item,
+                                intervals
+                            )
+                        spinner.adapter = adapter
+                        val itemSelectedListener: AdapterView.OnItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>,
+                                    view: View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    intervalWat =
+                                        parent.getItemAtPosition(position) as String //нужен чтобы достать инфу какую платформу юзер выбрал
+                                }
 
+                                override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+                            }
+                        spinner.onItemSelectedListener = itemSelectedListener
+                    }
+                    is SearchViewState.Loading -> {
+                        binding.progressBar.isVisible = true
+                    }
+                    is SearchViewState.Success -> {
+                        binding.progressBar.isVisible = false
+                        val profile: ProfileDomainModel =
+                            it.searchViewState.profileDomainModel
+
+                        binding.username.run {
+                            text = profile.username
+                            isVisible = true
                         }
-                        val recyclerView: RecyclerView = binding.rvProfiles
-                        recyclerView.adapter = adapter
-                        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-                        convertSingleIntoList(it.searchViewState.getProfileModelUseCase.execute())
-                        adapter.setData()
+                        binding.profileLevel.run {
+                            text = profile.level.toString()
+                            isVisible = true
+                        }
+
+                        binding.score.run {
+                            text = profile.score.toString()
+                            isVisible = true
+                        }
+
+                        binding.wins.run {
+                            text = profile.wins.toString()
+                            isVisible = true
+                        }
+
+                        binding.losses.run {
+                            text = profile.losses.toString()
+                            isVisible = true
+                        }
+
+                        binding.accuracy.run {
+                            text = profile.accuracy.toString()
+                            isVisible = true
+                        }
+
+                        binding.kdRatio.run {
+                            text = profile.kdRatio.toString()
+                            isVisible = true
+                        }
+
+                        binding.headshots.run {
+                            text = profile.headshots.toString()
+                            isVisible = true
+                        }
+
                     }
                 }
             }
         }
-
     }
-
-    private fun convertSingleIntoList(getProfileModelUseCase: Single<ProfileDomainModel>){
-        var profileDomainList: List<ProfileDomainModel> = emptyList()
-        for(single in getProfileModelUseCase){
-
-        }
-    }
-
 }

@@ -2,25 +2,27 @@ package com.codsearchengineprofile.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codsearchengineprofile.presentation.interfaces.UiEffect
+import com.codsearchengineprofile.domain.repository.ProfileRepository
 import com.codsearchengineprofile.presentation.interfaces.UiEvent
 import com.codsearchengineprofile.presentation.interfaces.UiState
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<Event : UiEvent, State : UiState> : ViewModel() {
 
-    private val initialState : State by lazy { createInitialState() }
-    abstract fun createInitialState() : State
+    private val initialState: State by lazy { createInitialState() }
+    abstract fun createInitialState(): State
 
     val currentState: State
         get() = uiState.value
 
-    private val _uiState : MutableStateFlow<State> = MutableStateFlow(initialState)
+    private val _uiState: MutableStateFlow<State> = MutableStateFlow(initialState)
     val uiState = _uiState.asStateFlow()
 
-    private val _event : MutableSharedFlow<Event> = MutableSharedFlow()
+    private val _event: MutableSharedFlow<Event> = MutableSharedFlow()
     val event = _event.asSharedFlow()
 
 //    private val _effect : Channel<Effect> = Channel()
@@ -38,9 +40,9 @@ abstract class BaseViewModel<Event : UiEvent, State : UiState> : ViewModel() {
         }
     }
 
-    abstract fun handleEvent(event : Event)
+    abstract fun handleEvent(event: Event)
 
-    fun setEvent(event : Event) {
+    fun setEvent(event: Event) {
         val newEvent = event
         viewModelScope.launch { _event.emit(newEvent) }
     }

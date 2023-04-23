@@ -1,7 +1,0 @@
-<resources>
-    <dimen name="text_size_tiny">12sp</dimen>
-    <dimen name="text_size_smaller">16sp</dimen>
-    <dimen name="text_size_small">20sp</dimen>
-    <dimen name="text_size_normal">24sp</dimen>
-    <dimen name="text_size_large">32sp</dimen>
-</resources>
