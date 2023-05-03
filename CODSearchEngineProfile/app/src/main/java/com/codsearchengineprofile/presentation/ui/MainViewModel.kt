@@ -1,8 +1,7 @@
 package com.codsearchengineprofile.presentation.ui
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.codsearchengineprofile.domain.repository.ProfileRepository
+import com.codsearchengineprofile.R
 import com.codsearchengineprofile.domain.usecases.GetProfileModelUseCase
 import com.codsearchengineprofile.presentation.ui.contract.Event
 import com.codsearchengineprofile.presentation.ui.contract.SearchViewState
@@ -13,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository
+    private val getProfileModelUseCase: GetProfileModelUseCase
 ) : BaseViewModel<Event, State>() {
 
     override fun createInitialState(): State {
@@ -29,7 +28,41 @@ class MainViewModel @Inject constructor(
                 getProfiles(event.username, event.platform)
             }
             is Event.OnSpinnerClicked -> {
+                showPlatforms()
+            }
+            is Event.OnSpinnerChose -> {
+                givePlatform(event.platform)
+            }
+        }
+    }
 
+    private fun showPlatforms(){
+        val platforms =
+            mutableListOf(
+                "PSN",
+                "XBN",
+                "BTL"
+            )
+        val imagesIds: MutableList<Int> = mutableListOf(
+            R.drawable.icon_playstation,
+            R.drawable.icon_xbox,
+            R.drawable.icon_battlenet
+        )
+        viewModelScope.launch {
+            setState {
+                copy(
+                    spinnerViewState = SpinnerViewState.Opened(platforms, imagesIds)
+                )
+            }
+        }
+    }
+
+    private fun givePlatform(platform: String) {
+        viewModelScope.launch {
+            setState {
+                copy(
+                    spinnerViewState = SpinnerViewState.ChangedImage(platform)
+                )
             }
         }
     }
@@ -41,15 +74,11 @@ class MainViewModel @Inject constructor(
                     searchViewState = SearchViewState.Loading(username, platform)
                 )
             }
-            val profileDomainModel = GetProfileModelUseCase(profileRepository).getProfile(username, platform)
-            try {
-                setState {
-                    copy(
-                        searchViewState = SearchViewState.Success(profileDomainModel)
-                    )
-                }
-            } catch (exception: Exception) {
-                Log.d("MAINVIEWMODEL", exception.toString())
+            val profileDomainModel = getProfileModelUseCase.getProfile(username, platform)
+            setState {
+                copy(
+                    searchViewState = SearchViewState.Success(profileDomainModel)
+                )
             }
         }
     }

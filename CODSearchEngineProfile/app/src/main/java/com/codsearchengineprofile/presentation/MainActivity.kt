@@ -7,7 +7,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.codsearchengineprofile.R
 import com.codsearchengineprofile.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         val navController = findNavController(R.id.fragmentContainerView)
         appBarConfiguration = AppBarConfiguration(navController.graph)
