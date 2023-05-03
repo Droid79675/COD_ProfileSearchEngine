@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue"
+    tools:context="com.codsearchengineprofile.presentation.ui.MainFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.CODSearchEngineProfile.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.CODSearchEngineProfile.PopupOverlay">
+
+            <TextView
+                android:id="@+id/toolbar_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_main_label"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_small" />
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <TextView
+        android:id="@+id/homepage_welcome_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/black_ops_one_regular"
+        android:text="@string/fragment_main_find_your_cod_profile"
+        android:textAlignment="center"
+        android:textColor="@color/yellow"
+        android:textSize="@dimen/text_size_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+    <!--    <View-->
+    <!--        android:id="@+id/view_rectangle"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:layout_marginTop="220dp"-->
+    <!--        android:layout_marginEnd="30dp"-->
+    <!--        android:layout_marginStart="50dp"-->
+    <!--        android:layout_marginBottom="440dp"-->
+    <!--        android:background="@drawable/rounded_edit_text"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/tv_fragment_main" />-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_field"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="340dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/rounded_text_input_layout"
+        android:hint="@string/fragment_main_type_your_cod_name"
+        android:inputType="textMultiLine"
+        android:textColorHint="@color/transparent_gray"
+        android:textSize="22sp"
+        app:boxBackgroundColor="@color/dark_blue"
+        app:boxCornerRadiusBottomEnd="30dp"
+        app:boxCornerRadiusTopEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homepage_welcome_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_text_search_field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="100dp"
+            android:background="@drawable/rounded_edit_text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/platform_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="58dp"
+        android:layout_marginEnd="290dp"
+        android:background="@drawable/icon_playstation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homepage_welcome_text" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="200dp"
+        android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homepage_welcome_text" />
+
+    <TextView
+        android:id="@+id/error_no_internet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/fragment_main_error_no_internet"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_field" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="250dp"
+        android:layout_marginBottom="230dp"
+        android:text="Username"
+        android:textColor="@color/light_gray"
+        android:textSize="34sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/search_field" />
+
+    <TextView
+        android:id="@+id/profile_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="230dp"
+        android:text="Profile Level:"
+        android:textColor="@color/light_gray"
+        android:textSize="24sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/username"
+        app:layout_constraintTop_toTopOf="@id/search_field" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:text="Score:"
+        android:textColor="@color/light_gray"
+        android:textSize="28sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username" />
+
+    <TextView
+        android:id="@+id/wins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="26dp"
+        android:text="Wins:"
+        android:textColor="@color/light_gray"
+        android:textSize="28sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/score" />
+
+    <TextView
+        android:id="@+id/losses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="26dp"
+        android:text="Losses:"
+        android:textColor="@color/light_gray"
+        android:textSize="28sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wins" />
+
+
+    <TextView
+        android:id="@+id/accuracy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="26dp"
+        android:text="Accuracy:"
+        android:textColor="@color/light_gray"
+        android:textSize="28sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/losses" />
+
+    <TextView
+        android:id="@+id/kd_ratio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="40dp"
+        android:text="K/D Ratio:"
+        android:textColor="@color/light_gray"
+        android:textSize="28sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/score"
+        app:layout_constraintTop_toBottomOf="@id/username" />
+
+    <TextView
+        android:id="@+id/headshots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="230dp"
+        android:text="Headshots:"
+        android:textColor="@color/light_gray"
+        android:textSize="28sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/score"
+        app:layout_constraintTop_toBottomOf="@id/kd_ratio" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
