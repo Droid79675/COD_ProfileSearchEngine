@@ -1,4 +1,4 @@
-package com.codsearchengineprofile.domain.models
+package com.codsearchengineprofile.domain.model
 
 data class ProfileDomainModel (
     var platform: String,

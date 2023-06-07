@@ -1,48 +1,55 @@
 package com.codsearchengineprofile.data.di
 
+import com.codsearchengineprofile.BuildConfig
 import com.codsearchengineprofile.data.apiservice.ProfileService
 import com.codsearchengineprofile.data.di.interceptor.ApiKeyInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 class NetworkModule {
-    private val url: String = "https://call-of-duty-modern-warfare.p.rapidapi.com/"
+
+//    private val url: String = "https://call-of-duty-modern-warfare.p.rapidapi.com/"
 
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(@Named("api_key") apiKeyInterceptor: Interceptor): OkHttpClient {
         val okHttpBuilder = OkHttpClient.Builder()
         okHttpBuilder.addInterceptor(HttpLoggingInterceptor())
-        okHttpBuilder.addInterceptor(ApiKeyInterceptor())
+        okHttpBuilder.addInterceptor(apiKeyInterceptor)
         return okHttpBuilder.build()
     }
 
-    @Singleton
     @Provides
-    fun provideGson(): Gson {
-        return GsonBuilder()
-            .setLenient()
-            .create()
-    }
-
-    @Provides
-    @Named("auth_retrofit")
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        @Named("base_url") baseUrl: String
+    ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(url)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .baseUrl(baseUrl)
+            .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
     }
-    
-    val profileApi = provideRetrofit(provideOkHttpClient()).create(ProfileService::class.java)
+
+    @Provides
+    @Named("api_key")
+    fun provideApiKeyInterceptor(): Interceptor = ApiKeyInterceptor()
+
+    @Provides
+    @Named("base_url")
+    fun provideBaseUrl(): String = BuildConfig.API_ENDPOINT
+
+    @Provides
+    fun provideProfileService(
+        retrofit: Retrofit
+    ): ProfileService = retrofit.create(ProfileService::class.java)
 }
